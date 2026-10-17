@@ -2,7 +2,7 @@
 * [PingMyNetwork Sandbox](https://pingmynetwork.com/)
 ---
 # iBGP Indirect Neighborship
-![ibgp-indirect](ibgp-indirect.png)
+![ibgp-indirect](../imgs/ibgp-indirect.png)
 ### 1). Topology Overview
 - R1 and R2 are both in AS 100 and are not directly connected. They reach each other through two redundant paths: R1 > R3 > R2 and R1 > R4 > R2.
 - R3 and R4 are transit routers, and all four routers run OSPF.

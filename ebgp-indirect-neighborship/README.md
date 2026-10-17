@@ -2,7 +2,7 @@
 * [PingMyNetwork Sandbox](https://pingmynetwork.com/)
 ---
 # eBGP Indirect Neighborship
-![ebgp-indirect](ebgp-indirect.png)
+![ebgp-indirect](../imgs/ebgp-indirect.png)
 ### 1). Topology Overview
 - R1 (AS 100) and R2 (AS 200) are in different autonomous systems and are not directly connected. They reach each other through two redundant paths: R1 > R3 > R2 and R1 > R4 > R2.
 - R3 and R4 are transit routers, and all four routers run OSPF.
