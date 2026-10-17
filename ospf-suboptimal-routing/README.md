@@ -1,7 +1,7 @@
 ### Labs built using:
 * [PingMyNetwork Sandbox](https://pingmynetwork.com/)
 ---
-# OSPF Suboptimal Routing
+# Steering Suboptimal OSPF Traffic to the Right ASBR
 ![OSPF01](../imgs/OSPF01.png)
 ##### i). Topology Overview
 - In the following topology:
