@@ -97,7 +97,7 @@ interface range vlan30,vlan40
 * An IP SLA ICMP probe from each CORE switch to R1 is tracked, and when the link to R1 fails, the HSRP priority of the Active CORE drops by `2`, which makes it `99` (less than the default of `100` on the peer), so the other CORE takes over as the gateway.
 ---
 #### 4). Analyzing Failures
-* NOTE: VLAN10 is used as an example here
+* NOTE: VLAN10, VLAN20 is used as an example here
 * 1). When CORE1 goes down
 * ![HSRP02](../imgs/HSRP02.png)
 * ![HSRP03](../imgs/HSRP03.png)
