@@ -6,7 +6,7 @@
 #### 1). Topology Overview
 - R1, CORE1, and CORE2 run OSPF, CORE1 and CORE2 SVIs are advertised into OSPF
 - CORE1 and CORE2 are connected to each other by an LACP port-channel (F0/2 and F0/3) running as a Layer 3 link on `10.1.0.0/30`
-- ASW1 and ASW2 are access switches, and each is connected to both CORE1 and CORE2 using `Trunk` links.
+- ASW1 and ASW2 are access switches, and each is connected to both CORE1 and CORE2 using EtherChannel `Trunk` links.
 - Hosts are placed in four VLANs shown above
 - The default gateway of each PC is the VRRP virtual IP of its VLAN (for example `10.1.10.1` for VLAN 10).
 - CORE1 and CORE2 hold the SVIs shown in IPv4 Addressing Label
@@ -71,7 +71,7 @@ interface range vlan30,vlan40
 * An IP SLA ICMP probe from each CORE switch to R1 is tracked, and when the link to R1 fails, the VRRP priority of the Master CORE drops by `2`, which makes it `99` (less than the default of `100` on the peer), so the other CORE takes over as the gateway.
 ---
 #### 4). Analyzing Failures
-* NOTE: VLAN10 is used as an example here
+* NOTE: VLAN10, VLAN20 is used as an example here
 * 1). When CORE1 goes down
 * ![VRRP02](../imgs/VRRP02.png)
 * ![VRRP04](../imgs/VRRP04.png)
