@@ -1,7 +1,7 @@
 ### Labs built using:
 * [PingMyNetwork Sandbox](https://pingmynetwork.com/profile/doer)
 ---
-# HSRP Multi-Group Load Balancing with Tracking
+# HSRPv2 Multi-Group Load Balancing with Tracking
 ![HSRP01](../imgs/HSRP01.png)
 #### 1). Topology Overview
 - R1, CORE1, and CORE2 run OSPF, CORE1 and CORE2 SVIs are advertised into OSPF
