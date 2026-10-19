@@ -22,51 +22,51 @@
 ```
 spanning-tree vlan 10,20 priority 0
 interface Vlan10
-	vrrp 12 ip 10.1.10.1
-	vrrp 12 priority 101
+ vrrp 12 ip 10.1.10.1
+ vrrp 12 priority 101
 interface Vlan20
-	vrrp 12 ip 10.1.20.1
-	vrrp 12 priority 101
+ vrrp 12 ip 10.1.20.1
+ vrrp 12 priority 101
 interface Vlan30
-	vrrp 34 ip 10.1.30.1
+ vrrp 34 ip 10.1.30.1
 interface Vlan40
-	vrrp 34 ip 10.1.40.1
+ vrrp 34 ip 10.1.40.1
 ```
 * CORE2:
 ```
 spanning-tree vlan 30,40 priority 0
 interface Vlan10
-	vrrp 12 ip 10.1.10.1
+ vrrp 12 ip 10.1.10.1
 interface Vlan20
-	vrrp 12 ip 10.1.20.1
+ vrrp 12 ip 10.1.20.1
 interface Vlan30
-	vrrp 34 ip 10.1.30.1
-	vrrp 34 priority 101
+ vrrp 34 ip 10.1.30.1
+ vrrp 34 priority 101
 interface Vlan40
-	vrrp 34 ip 10.1.40.1
-	vrrp 34 priority 101
+ vrrp 34 ip 10.1.40.1
+ vrrp 34 priority 101
 ```
 ---
 #### 3). Configuring Tracking
 * CORE1:
 ```
 ip sla 1
-	icmp-echo 10.1.11.1 source-interface FastEthernet0/1
-		frequency 5
+ icmp-echo 10.1.11.1 source-interface FastEthernet0/1
+  frequency 5
 ip sla schedule 1 life forever start-time now
 track 1 ip sla 1 reachability
 interface range vlan10,vlan20
-	vrrp 12 track 1 decrement 2
+ vrrp 12 track 1 decrement 2
 ```
 * CORE2:
 ```
 ip sla 1
-	icmp-echo 10.1.12.1 source-interface FastEthernet0/1
-		frequency 5
+ icmp-echo 10.1.12.1 source-interface FastEthernet0/1
+  frequency 5
 ip sla schedule 1 life forever start-time now
 track 1 ip sla 1 reachability
 interface range vlan30,vlan40
-	vrrp 34 track 1 decrement 2
+ vrrp 34 track 1 decrement 2
 ```
 * An IP SLA ICMP probe from each CORE switch to R1 is tracked, and when the link to R1 fails, the VRRP priority of the Master CORE drops by `2`, which makes it `99` (less than the default of `100` on the peer), so the other CORE takes over as the gateway.
 ---
