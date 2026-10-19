@@ -2,7 +2,7 @@
 * [PingMyNetwork Sandbox](https://pingmynetwork.com/profile/doer)
 ---
 # HSRP Multi-Group Load Balancing with Tracking
-![[HSRP01.png]]
+![HSRP01](../imgs/HSRP01.png)
 #### 1). Topology Overview
 - R1, CORE1, and CORE2 run OSPF, CORE1 and CORE2 SVIs are advertised into OSPF
 - CORE1 and CORE2 are connected to each other by an LACP port-channel (F0/2 and F0/3) running as a Layer 3 link on `10.1.0.0/30`
@@ -14,7 +14,7 @@
 #### 2). Configuration of HSRP and STP
 - Make the HSRP Active and the STP root bridge the same switch for each VLAN, so Layer 2 traffic and Layer 3 traffic follow the same path and no traffic has to cross the inter-core link to reach its gateway. Both cores are also actively used, so one is not sitting idle as a standby.
 - NOTE:
-	- In HSRP Preemption is disabled by default for Active Router, need to enable
+	- In HSRP, preemption is disabled by default and must be enabled with `standby <group> preempt`.
 
 | HSRP Group | VLANs  | CORE1                  | CORE2                  |
 | ---------- | ------ | ---------------------- | ---------------------- |
@@ -99,8 +99,8 @@ interface range vlan30,vlan40
 #### 4). Analyzing Failures
 * NOTE: VLAN10 is used as an example here
 * 1). When CORE1 goes down
-* ![VRRP02](../imgs/VRRP02.png)
-* ![VRRP04](../imgs/VRRP04.png)
+* ![HSRP02](../imgs/HSRP02.png)
+* ![HSRP03](../imgs/HSRP03.png)
 * 2). When any link from CORE1 -> R1's g0/0 is down
-* ![VRRP03](../imgs/VRRP03.png)
-* ![VRRP05](../imgs/VRRP05.png)
+* ![HSRP04](../imgs/HSRP04.png)
+* ![HSRP05](../imgs/HSRP05.png)
