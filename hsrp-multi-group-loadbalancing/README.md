@@ -96,7 +96,11 @@ interface range vlan30,vlan40
 ```
 * An IP SLA ICMP probe from each CORE switch to R1 is tracked, and when the link to R1 fails, the HSRP priority of the Active CORE drops by `2`, which makes it `99` (less than the default of `100` on the peer), so the other CORE takes over as the gateway.
 ---
-#### 4). Analyzing Failures
+#### 4). Resultant Traffic Flow
+* CORE1 is the HSRP Active router for VLAN 10 and 20, and CORE2 is the HSRP Active router for VLAN 30 and 40. Traffic from each VLAN is sent to its Active core and then to R1 (Loopback8 8.8.8.8/32), so both cores are used, even when VLANs are spread across different access switches.
+* ![HSRP06](../imgs/HSRP06.png)
+---
+#### 5). Analyzing Failures
 * NOTE: VLAN10, VLAN20 is used as an example here
 * 1). When CORE1 goes down
 * ![HSRP02](../imgs/HSRP02.png)
