@@ -6,7 +6,7 @@
 #### 1). Topology Overview
 - R1 is the **ABR** (Area Border Router). It connects Area 51 (R2) to Area 0 (R3, R4, R5).
 - R2 has four loopbacks (Lo11 to Lo14: `192.168.11.0/24` to `192.168.14.0/24`) in Area 51.
-- Without summarization, R1 sends each loopback into Area 0 as its own **Type 3 LSA**, so R3, R4, and R5 each hold 4 separate routes.
+- Without summarization, R1 advertises each loopback into Area 0 as its own **Type 3 LSA**, so R3, R4, and R5 each hold 4 separate routes.
 - **Goal:** Summarize the four loopbacks into one route, `192.168.8.0/21`, on R1.
 * Advantages of summarization:
 	- Fewer routes in the routing tables of Area 0.
@@ -16,13 +16,13 @@
 #### 2). IPv4 Addressing and OSPF Details
 ##### IPv4 Addressing
 
-| Link    | Subnet       | IP                                               |
-| ------- | ------------ | ------------------------------------------------ |
-| R1 - R2 | 10.1.12.0/24 | R1 G0/0 - 10.1.12.1/24<br>R2 G0/2 - 10.1.12.2/24 |
-| R1 - R3 | 10.1.13.0/24 | R1 G0/2 - 10.1.13.1/24<br>R3 G0/0 - 10.1.13.3/24 |
-| R3 - R4 | 10.1.34.0/24 | R3 G0/1 - 10.1.34.3/24<br>R4 G0/0 - 10.1.34.4/24 |
-| R3 - R5 | 10.1.35.0/24 | R3 G0/2 - 10.1.35.3/24<br>R5 G0/0 - 10.1.35.5/24 |
-| LoX     | 10.1.X.0/24  | 10.1.X.1/24                                      |
+| Link    | Subnet         | IP                                               |
+| ------- | -------------- | ------------------------------------------------ |
+| R1 - R2 | 10.1.12.0/24   | R1 G0/0 - 10.1.12.1/24<br>R2 G0/2 - 10.1.12.2/24 |
+| R1 - R3 | 10.1.13.0/24   | R1 G0/2 - 10.1.13.1/24<br>R3 G0/0 - 10.1.13.3/24 |
+| R3 - R4 | 10.1.34.0/24   | R3 G0/1 - 10.1.34.3/24<br>R4 G0/0 - 10.1.34.4/24 |
+| R3 - R5 | 10.1.35.0/24   | R3 G0/2 - 10.1.35.3/24<br>R5 G0/0 - 10.1.35.5/24 |
+| LoX     | 192.168.X.0/24 | 192.168.X.1/24                                   |
 ##### OSPF Details
 
 | Router | Router-ID | Interface        | Network | Area | Role            |
@@ -58,6 +58,8 @@ router ospf 110
 ```
 ---
 #### 5). Verification
+* R3's routing table before summarization
+* ![OSPF18](../imgs/OSPF18.png)
 - On R3: `show ip route ospf` now shows one route `192.168.8.0/21` (marked `O IA`) instead of four.
 - ![OSPF11](../imgs/OSPF11.png)
 - On R1: `show ip route` shows a route to `192.168.8.0/21` via `Null0`. This is an automatic discard route that prevents routing loops.
@@ -74,7 +76,7 @@ router ospf 110
 router ospf 110
  no discard-route internal
 ```
-* Check R1 Routing Table no more route toward `Null0`
+* Verify that the Null0 discard route is no longer present in R1's routing table.
 * ![OSPF15](../imgs/OSPF15.png)
 ##### ii). IOS XE routers set the default metric for the summary LSA to be the lowest metric associated with an LSA, to set it statically
 ```
@@ -82,7 +84,7 @@ router ospf 110
 router ospf 110
  area 51 range 192.168.8.0 255.255.248.0 cost 100
 ```
-* Check in R1
+* Check in R3
 * ![OSPF16](../imgs/OSPF16.png)
 ##### iii). Instead of summarizing the 192s prefix, if you want to filter those routes using summary address:
 ```
@@ -90,5 +92,5 @@ router ospf 110
 router ospf 110
  area 51 range 192.168.8.0 255.255.248.0 not-advertise
 ```
-* Check in R1 now, you won't receive an single prefix from 192s subnet
+* Check in R3 now, you won't receive any matching external for 192s subnet
 * ![OSPF17](../imgs/OSPF17.png)
