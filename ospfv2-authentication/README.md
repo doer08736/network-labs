@@ -1,7 +1,7 @@
 #### Labs built using:
 - [PingMyNetwork Sandbox](https://pingmynetwork.com/profile/doer)
 ---
-## OSPFv2 Authentication
+## OSPFv2 Authentication Types
 ![OSPF28](../imgs/OSPF28.png)
 #### 1). Topology Overview
 - R1 and R2 are connected point-to-point over `10.1.12.0/30`, and each interface is enabled in OSPF 110 Area 0.
