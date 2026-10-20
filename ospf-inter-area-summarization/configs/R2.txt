@@ -1,0 +1,132 @@
+!
+! Last configuration change at 15:27:45 UTC Tue Oct 20 2026
+!
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback11
+ ip address 192.168.11.1 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 110 area 51
+!
+interface Loopback12
+ ip address 192.168.12.1 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 110 area 51
+!
+interface Loopback13
+ ip address 192.168.13.1 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 110 area 51
+!
+interface Loopback14
+ ip address 192.168.14.1 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 110 area 51
+!
+interface GigabitEthernet0/0
+ ip address 10.1.12.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 110 area 51
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 110
+ router-id 2.2.2.2
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ipv6 ioam timestamp
+!
+!
+!
+control-plane
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+no scheduler allocate
+!
+end
