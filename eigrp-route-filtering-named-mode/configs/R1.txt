@@ -1,0 +1,145 @@
+!
+! Last configuration change at 11:06:32 UTC Fri Oct 23 2026
+!
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 192.168.1.1 255.255.255.0
+!
+interface Loopback2
+ ip address 192.168.2.1 255.255.255.0
+!
+interface Loopback3
+ ip address 192.168.3.1 255.255.255.0
+!
+interface Loopback4
+ ip address 192.168.4.1 255.255.255.0
+!
+interface Loopback5
+ ip address 192.168.5.1 255.255.255.0
+!
+interface Loopback10
+ ip address 172.16.10.1 255.255.255.0
+!
+interface Loopback20
+ ip address 172.16.20.1 255.255.255.0
+!
+interface GigabitEthernet0/0
+ ip address 10.1.12.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ ip address 10.1.13.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router eigrp doer
+ !
+ address-family ipv4 unicast autonomous-system 100
+  !
+  topology base
+   distribute-list prefix 192s out GigabitEthernet0/0
+  exit-af-topology
+  network 192.168.0.0 0.0.255.255
+  network 10.1.12.1 0.0.0.0
+  network 10.1.13.1 0.0.0.0
+  network 172.16.10.1 0.0.0.0
+  network 172.16.20.1 0.0.0.0
+  eigrp router-id 1.1.1.1
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ip prefix-list 192s seq 5 deny 192.168.0.0/21 ge 24 le 24
+ip prefix-list 192s seq 10 permit 0.0.0.0/0 le 32
+!
+ipv6 ioam timestamp
+!
+!
+!
+control-plane
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+no scheduler allocate
+!
+end
